@@ -52,8 +52,10 @@ The following form fields are available:
 [Relation](./form/widget-relation.md)
 [Repeater](./form/widget-repeater.md)
 [Rich Editor](./form/widget-richeditor.md)
+[Page Finder](./form/widget-pagefinder.md)
 [Sensitive](./form/widget-sensitive.md)
 [Tag List](./form/widget-taglist.md)
+[Currency](./form/widget-currency.md)
 [Boxes](./form/widget-boxes.md)
 [Section](./form/ui-section.md)
 [Hint](./form/ui-hint.md)
@@ -78,9 +80,10 @@ Property | Description
 **commentAbove** | places a comment above the field.
 **commentHtml** | allow HTML markup inside the comment. Options: `true`, `false`.
 **default** | specify the default value for the field. For `dropdown`, `checkboxlist`, `radio` and `balloon-selector` widgets, you may specify an option key here to have it selected by default.
-**defaultFrom** | takes the default value from the value of another field.
+**defaultFrom** | takes the default value from the value of another model attribute.
 **tab** | assigns the field to a tab.
 **cssClass** | assigns a CSS class to the field container.
+**autoFocus** | flags the field to be focused when the form loads. Default: `false`.
 **readOnly** | prevents the field from being modified. Options: `true`, `false`.
 **disabled** | prevents the field from being modified and excludes it from the saved data. Options: `true`, `false`.
 **hidden** | hides the field from the view and excludes it from the saved data. Options: `true`, `false`.
@@ -123,6 +126,7 @@ Property | Description
 **activeTab** | selected tab when the form first loads, name or index. Default: `1`
 **icons** | assign icons to tabs using tab names as the key.
 **lazy** | array of tabs to be loaded dynamically when clicked. Useful for tabs that contain large amounts of content.
+**identifiers** | array of custom HTML identifiers for targeting the tab. Useful for showing and hiding tabs using JavaScript.
 **linkable** | determines if the tabs can be linked using URL fragments. Default: `true`
 **cssClass** | assigns a CSS class to the tab container.
 **paneCssClass** | assigns a CSS class to an individual tab pane. Value is an array, key is tab index or label, value is the CSS class. It can also be specified as a string, in which case the value will be applied to all tabs.
@@ -145,6 +149,9 @@ tabs:
     icons:
         User: icon-user
         Groups: icon-group
+
+    identifiers:
+        User: userTab
 
     fields:
         # [...]
@@ -215,7 +222,7 @@ The `trigger` definition specifies these properties.
 Property | Description
 ------------- | -------------
 **action** | defines the action applied to this field when the condition is met. Supported values: `show`, `hide`, `enable`, `disable`, `empty`, `fill[somevalue]`.
-**field** | defines the other field name that will trigger the action.
+**field** | reference to the other field name that triggers the action. Example: `color` or `color[]`.
 **condition** | determines the condition the specified field should satisfy for the condition to be considered `true`. Supported values: `checked`, `unchecked`, `value[somevalue]`.
 
 #### Multiple Actions
@@ -238,6 +245,28 @@ trigger:
     action: show
     condition: value[csv][csv_custom]
     field: file_format
+```
+
+#### Wildcard Value Conditions
+
+You may check the `value[]` condition matches multiple possible values using a wildcard character (`*`), for example, **foo\*** matches anything that starts with "foo", and **\*bar** matches anything that ends with "bar".
+
+```yaml
+trigger:
+    action: show
+    condition: value[*.mp4]
+    field: file_name
+```
+
+#### Multiple Field Values
+
+Some fields, such as [Checkbox List](./form/field-checkboxlist.md) and [Tag List](./form/widget-taglist.md), will store their values as an array. When referencing these fields, the field name should use an array suffix (`[]`) to look at all possible values. For example, if a `colors` field name supports multiple values, the field name `colors[]` should be used as a reference.
+
+```yaml
+trigger:
+    action: show
+    condition: value[red][green]
+    field: colors[]
 ```
 
 #### Referencing Parent Fields

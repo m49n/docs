@@ -23,6 +23,33 @@ The `--rollback` option will reverse all migrations, dropping database tables an
 php artisan october:migrate --rollback
 ```
 
+The `--skip-errors` option will ignore any exceptions that occur during the migration process. This can be useful in cases where tables already exist, but version information should still be applied.
+
+```bash
+php artisan october:migrate --skip-errors
+```
+
+## Bleeding Edge Updates
+
+To receive bleeding edge updates of October CMS, change the minimum stability setting to `dev`.
+
+```bash
+composer config minimum-stability dev
+```
+
+Then target the `develop` branch in the composer.json file. For example:
+
+```json
+"october/all": "dev-develop",
+"october/rain": "dev-develop",
+```
+
+The `develop` branch includes updates that are not released in the stable channel yet. There can be the latest bug fixes and features, but at the same time, it can contain unfinished work. Enabling bleeding edge updates is not recommended for production environments.
+
+::: tip
+The `dev-develop` notation may also apply to some plugins and themes.
+:::
+
 ## Upgrade Guide from v1 and v2
 
 If your starting point is October CMS 2.0, please observe the following guides when performing the upgrade.

@@ -1,7 +1,8 @@
 ---
 subtitle: Form Widget
+shortname: Tag List
 ---
-# Tag List
+# Tag List Field
 
 The `taglist` form widget renders a field for inputting a list of tags.
 
@@ -11,16 +12,21 @@ tags:
     separator: space
 ```
 
-The following properties are supported.
+The following [field properties](../form-fields.md) are supported and commonly used.
 
 Property | Description
 ------------- | -------------
+**label** | a name when displaying the form field to the user.
+**default** | specifies a default string value, optional.
+**comment** | places a descriptive comment below the field.
 **mode** | controls how the value is returned, either `string`, `array` or `relation`. Default: `string`
 **separator** | separate tags with the specified character, either `comma` or `space`. Default: `comma`
 **customTags** | allows custom tags to be entered manually by the user. Default: `true`
-**options** | specifies a method or array for predefined options. Set to true to use model `get*Field*Options` method. Optional.
+**options** | specifies an array for predefined options.
+**optionsMethod** | specifies a method name for predefined options, defined on the model or as a static method, eg `Class::method`. Set to `true` to use model **get*Field*Options** method.
 **nameFrom** | if relation mode is used, a model attribute name for displaying the tag name. Default: `name`
 **useKey** | use the key instead of value for saving and reading data. Default: `false`
+**maxItems** | maximum number of tags that can be included or selected.
 
 A tag list support the same methods for defining the options as the [dropdown field type](./field-dropdown.md).
 

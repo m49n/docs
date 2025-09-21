@@ -3,6 +3,10 @@ subtitle: Twig Tag
 ---
 # {% flash %}
 
+::: aside
+View the [Flash Messages article](../../cms/features/flash-messages.md) to learn more about using flash messages.
+:::
+
 The `{% flash %}` and `{% endflash %}` tags will render any flash messages stored in the user session, set by the `Flash` PHP class. The `message` variable inside will contain the flash message text and the markup inside will repeat for multiple flash messages.
 
 ```twig
@@ -23,7 +27,7 @@ You can use the `type` variable that represents the flash message type &mdash; *
 {% endflash %}
 ```
 
-You can also specify the `type`  to filter flash messages of a given type. The next example will show only **success** messages, if there is an **error** message it won't be displayed.
+You can also specify the `type` to filter flash messages of a given type. The next example will show only **success** messages, if there is an **error** message it won't be displayed.
 
 ```twig
 {% flash success %}
@@ -31,23 +35,28 @@ You can also specify the `type`  to filter flash messages of a given type. The n
 {% endflash %}
 ```
 
-## Setting flash messages
+## Setting Flash Messages to a Twig Variable
 
-Flash messages can be set by [Components](../../cms/themes/components.md) or inside the page or layout PHP section with the `Flash` class.
+In any template you can set the flash messages to a variable with the `flash()` function. This lets you manipulate the output before display. The function returns an array with one flash message per type.
 
-```php
-function onSave()
-{
-    // Sets a successful message
-    Flash::success('Settings successfully saved!');
-
-    // Sets an error message
-    Flash::error('Error saving settings');
-
-    // Sets a warning message
-    Flash::warning('There was a problem but no worries');
-
-    // Sets an informative message
-    Flash::info('Just a heads up about the settings');
-}
+```twig
+{% set messages = flash() %}
 ```
+
+The first argument can specify the message type, which returns the message as a string.
+
+```twig
+{% set successMessage = flash('success') %}
+```
+
+If the first argument is set to **all** it will return an array of types, each type is an array of all flash messages.
+
+```twig
+{% set allMessages = flash('all') %}
+```
+
+#### See Also
+
+::: also
+* [Flash Messages](../../cms/features/flash-messages.md)
+:::

@@ -26,7 +26,7 @@ The `create:component` command creates a new component class and the default com
 php artisan create:component Acme.Blog BlogPosts
 ```
 
-The component class file defines the component functionality and component properties. The component class file name should match the component class name. Component classes should extend the `\Cms\Classes\ComponentBase` class. The component from the next example should be defined in the **plugins/acme/blog/components/BlogPosts.php** file.
+The component class file defines the component functionality and component properties. The component class file name should match the component class name. Component classes should extend the `Cms\Classes\ComponentBase` class. The component from the next example should be defined in the **plugins/acme/blog/components/BlogPosts.php** file.
 
 ```php
 namespace Acme\Blog\Components;
@@ -37,7 +37,8 @@ class BlogPosts extends \Cms\Classes\ComponentBase
     {
         return [
             'name' => 'Blog Posts',
-            'description' => 'Displays a collection of blog posts.'
+            'description' => 'Displays a collection of blog posts.',
+            'icon' => 'icon-puzzle-piece'
         ];
     }
 
@@ -264,13 +265,16 @@ All components can come with default markup that is used when including it on a 
 
 The default component markup should be placed in a file named **default.htm**. For example, the default markup for the Demo ToDo component is defined in the file **/plugins/october/demo/components/todo/default.htm**. It can then be inserted anywhere on the page by using the `{% component %}` tag:
 
-```
+::: cmstemplate
+```ini
 url = "/todo"
 
 [demoTodo]
-==
+```
+```twig
 {% component 'demoTodo' %}
 ```
+:::
 
 The default markup can also take parameters that override the component properties at the time they are rendered.
 

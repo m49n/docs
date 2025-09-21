@@ -46,6 +46,12 @@ To install the platform, initialize a project using the `create-project` command
 composer create-project october/october myoctober
 ```
 
+The above commands install the latest version of October CMS, if you want to install v3.0, use the command below instead.
+
+```bash
+composer create-project october/october myoctober "^3.0"
+```
+
 When the command finishes, enter the project directory:
 
 ```bash
@@ -76,6 +82,8 @@ If you are installing the platform on a production web server, review the recomm
 
 ## Wizard Installation
 
+<VideoBlockLink src="https://www.youtube.com/watch?v=ypyOiVCxaQg" title="Wizard Tutorial" description="This video guides you through the process of installing October CMS using the easy-to-use Wizard installer." prompt="Watch the tutorial" />
+
 The wizard installation is an alternative way to install October CMS without using Composer. It is simpler than the command-line installation and doesn't require any special skills.
 
 1. Prepare a directory on your server that is empty. It can be a sub-directory, domain root or a sub-domain.
@@ -86,21 +94,6 @@ The wizard installation is an alternative way to install October CMS without usi
 1. Follow the installation instructions.
 
 ![image](https://github.com/octobercms/docs/blob/develop/images/wizard-installer.png?raw=true)
-
-## Bleeding Edge Updates
-
-To receive bleeding edge updates of October CMS, target the `develop` branch in the composer.json file. For example:
-
-```json
-"october/all": "dev-develop",
-"october/rain": "dev-develop",
-```
-
-The `develop` branch includes updates that are not released in the stable channel yet. There can be the latest bug fixes and features, but at the same time, it can contain unfinished work. Enabling bleeding edge updates is not recommended for production environments.
-
-::: tip
-The `dev-develop` notation may also apply to some plugins and themes.
-:::
 
 ## Troubleshooting Installation
 
@@ -143,6 +136,10 @@ The request timeout on the web server should be increased or disabled. For examp
 
 ::: details Zend OPcache API is restricted by "restrict_api" configuration directive
 This issue can appear when internals try to use the OPcache internals. This can be disabled by setting the **force_bytecode_invalidation** configuration to `false` inside the **config/cms.php** file.
+:::
+
+::: details Invalid credentials (HTTP 403) for '...", aborting.
+This error can appear in Composer when the **auth.json** file is missing on your server or your project license has expired, try logging in to your account and check that the project has an active license. If the license is active, you can reset it with the `project:set` artisan command.
 :::
 
 #### See Also
