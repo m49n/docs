@@ -1,0 +1,31 @@
+"/ru/":
+-
+    title: Начало работы
+    icon: "/images/october-leaf.svg"
+    prefix: "/4.x/ru/"
+    link: "/4.x/ru/setup/installation.html"
+-
+    title: Руководство по CMS
+    icon: "/images/markup-guide.svg"
+    prefix: "/4.x/ru/cms/"
+    link: "/4.x/ru/cms/themes/themes.html"
+-
+    title: Фреймворк AJAX
+    icon: "/images/markup-guide.svg"
+    prefix: "/4.x/ru/ajax/"
+    link: "/4.x/ru/ajax/introduction.html"
+-
+    title: Руководство по разметке
+    icon: "/images/markup-guide.svg"
+    prefix: "/4.x/ru/markup/"
+    link: "/4.x/ru/markup/templating.html"
+-
+    title: Расширение October CMS
+    icon: "/images/markup-guide.svg"
+    prefix: "/4.x/ru/extend/"
+    link: "/4.x/ru/extend/system/plugins.html"
+-
+    title: Справочник API
+    icon: "/images/markup-guide.svg"
+    prefix: "/4.x/ru/element/"
+    link: "/4.x/ru/element/form-fields.html"
