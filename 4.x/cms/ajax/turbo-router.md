@@ -5,28 +5,34 @@ subtitle: Learn how links are routed using the AJAX framework.
 
 Turbo routing is an implementation of PJAX (push state and AJAX) that gives the performance benefits of a single page application without the added complexity of a client-side framework. When you click a link, the page is automatically swapped client-side without the cost of a full page load.
 
-```twig
-{% framework turbo %}
+To enable turbo routing, include the following meta tag in the `<head>` section of your page or layout.
+
+```html
+<head>
+    <meta name="turbo-visit-control" content="enable" />
+</head>
 ```
+
+Once enabled, all internal links on the page will automatically use PJAX navigation instead of full page reloads.
 
 ## Routing Links
 
 You may programmatically visit a link with the following.
 
 ```js
-oc.visit(location);
+jax.visit(location);
 ```
 
 To replace the current URL without adding it to the navigation history, similar to `window.history.replaceState`, set the `action` option to **replace**.
 
 ```js
-oc.visit(location, { action: 'replace' });
+jax.visit(location, { action: 'replace' });
 ```
 
 To check if the turbo router is enabled and should be used.
 
 ```js
-if (oc.useTurbo && oc.useTurbo()) {
+if (jax.useTurbo && jax.useTurbo()) {
     // Use PJAX
 }
 ```
@@ -153,18 +159,18 @@ addEventListener('render', function() {
 });
 ```
 
-The `oc.pageReady` function is used call code when the page and scripts are ready. The function returns a promise that is resolved after all the page scripts have loaded, or immediately if they are already loaded.
+The `jax.pageReady` function is used call code when the page and scripts are ready. The function returns a promise that is resolved after all the page scripts have loaded, or immediately if they are already loaded.
 
 ```js
-oc.pageReady().then(() => {
+jax.pageReady().then(() => {
     // Page has finished loading scripts
 });
 ```
 
-The `oc.waitFor` is another useful function that will wait for an object or variable to exist. The function returns a promise that is resolved when the variable is found.
+The `jax.waitFor` is another useful function that will wait for an object or variable to exist. The function returns a promise that is resolved when the variable is found.
 
 ```js
-oc.waitFor(() => window.propName).then(() => [
+jax.waitFor(() => window.propName).then(() => [
     // window.propName is now available
 ]);
 ```
@@ -172,7 +178,7 @@ oc.waitFor(() => window.propName).then(() => [
 The second argument provides a timeout interval in milliseconds, the following will stop waiting after two seconds.
 
 ```js
-oc.waitFor(() => window.propName, 2000).then(() => {
+jax.waitFor(() => window.propName, 2000).then(() => {
     console.log('Found the variable!')
 }).catch(() => {
     console.error('Gave up waiting...')
@@ -208,7 +214,7 @@ To execute inline JavaScript code only once, regardless of first page load or PJ
 ### Making Controls Idempotent
 
 ::: aside
-October CMS provides a complimentary library that is used to make building [idempotent controls](./hot-controls.md) easy.
+October CMS includes a library that is used to make building [idempotent controls](https://larajax.org/controls/definition) easy.
 :::
 
 When a page visit occurs and JavaScript components are initialized, it is important that these function are idempotent. In simple terms, an idempotent function is safe to apply multiple times without changing the result beyond its initial application.
@@ -249,7 +255,7 @@ addEventListener('page:unload', function() {
 ```
 
 ::: tip
-October CMS includes a complimentary library for [building disposable controls](./hot-controls.md).
+October CMS includes a library for [building disposable controls](https://larajax.org/controls/definition).
 :::
 
 ### Pause Rendering
@@ -318,5 +324,6 @@ snippetOptions: {
 #### See Also
 
 ::: also
-* [Observable Controls](./hot-controls.md)
+* [Larajax Turbo Router](https://larajax.org/turbo/setup)
+* [Observable Controls](https://larajax.org/controls/definition)
 :::

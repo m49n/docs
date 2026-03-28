@@ -11,6 +11,7 @@
         - inspector-types
         - define-options
         - available-icons
+        - available-commands
 -
     title: Tailor Fields
     children:
@@ -63,6 +64,7 @@
     children:
         - lists/column-text
         - lists/column-number
+        - lists/column-file
         - lists/column-image
         - lists/column-switch
         - lists/column-summary
@@ -112,16 +114,24 @@
         - system/views
         - system/behaviors
         - system/widgets
+        - system/vue-components
         - system/ajax
 -
     title: Core Concepts
     children:
         - system/exceptions
         - system/sending-mail
-        - system/localization
         - system/routing
         - system/scheduling
         - system/unit-testing
+-
+    title: Localization & Multisite
+    children:
+        - multisite/introduction
+        - multisite/localization
+        - multisite/multisite
+        - multisite/translatable
+        - multisite/multisite-group
 -
     title: Extending the CMS
     children:
@@ -285,7 +295,6 @@
 "/cms/":
 -
     title: CMS
-    collapsable: false
     children:
         - themes/themes
         - themes/pages
@@ -295,63 +304,16 @@
         - themes/components
         - themes/snippets
 -
-    title: Tailor
-    collapsable: false
-    children:
-        - tailor/introduction
-        - tailor/blueprints
-        - tailor/content-fields
-        - tailor/navigation
-        - tailor/models
--
-    title: Available Components
-    collapsable: false
-    children:
-        - components/section
-        - components/collection
-        - components/global
-        - components/resources
-        - components/sitepicker
--
-    title: Theme Development
-    collapsable: false
-    children:
-        - themes/settings
-        - themes/localization
-        - themes/child-themes
-        - themes/database-themes
-        - themes/seeding-themes
--
-    title: Media Manager
-    collapsable: false
-    children:
-        - media/introduction
-        - media/providers
--
-    title: Resources
-    collapsable: false
-    children:
-        - resources/multisite
-        - resources/building-apis
-
-#
-# AJAX Nav
-#
-"/ajax/":
--
     title: AJAX
-    collapsable: false
     children:
-        - introduction
-        - handlers
-        - update-partials
-        - attributes-api
-        - javascript-api
-        - turbo-router
-        - hot-controls
+        - ajax/introduction
+        - ajax/handlers
+        - ajax/update-partials
+        - ajax/attributes-api
+        - ajax/javascript-api
+        - ajax/turbo-router
 -
     title: Features
-    collapsable: false
     children:
         - features/validation
         - features/uploads
@@ -362,6 +324,44 @@
         - features/redirects
         - features/polling
         - features/modals
+-
+    title: Media Manager
+    children:
+        - media/introduction
+        - media/providers
+-
+    title: Tailor
+    children:
+        - tailor/introduction
+        - tailor/blueprints
+        - tailor/content-fields
+        - tailor/navigation
+        - tailor/models
+-
+    title: Localization & Multisite
+    children:
+        - multisite/multisite
+        - multisite/localization
+        - multisite/tailor
+-
+    title: Theme Development
+    children:
+        - themes/settings
+        - themes/child-themes
+        - themes/database-themes
+        - themes/seeding-themes
+-
+    title: Available Components
+    children:
+        - components/section
+        - components/collection
+        - components/global
+        - components/resources
+        - components/sitepicker
+-
+    title: Resources
+    children:
+        - resources/building-apis
 
 #
 # Root Nav
@@ -390,5 +390,6 @@
     children:
         - resources/updating-october
         - resources/installing-packages
+        - resources/development-workflow
         - ['https://octobercms.com/docker-dev-image', 'Development Docker Image']
         - resources/migrate-laravel-project

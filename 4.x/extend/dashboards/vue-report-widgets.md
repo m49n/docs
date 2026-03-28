@@ -32,7 +32,7 @@ Dashboard widgets should be placed in the `vuecomponents` directory located in t
 
 ### Server-Side Class
 
-The server code for a dashboard widget must define a class that extends `Backend\Classes\VueReportWidgetBase`. The only required method that a widget class needs to implement is `getData`. Below is the initial implementation of the class (MyCustomWidget.php):
+The server code for a dashboard widget must define a class that extends `Dashboard\Classes\VueReportWidgetBase`. The only required method that a widget class needs to implement is `getData`. Below is the initial implementation of the class (MyCustomWidget.php):
 
 ```php
 namespace Acme\MyPlugin\VueComponents;
@@ -43,6 +43,11 @@ use Carbon\Carbon;
 
 class MyCustomWidget extends VueReportWidgetBase
 {
+    /**
+     * @var string componentName is the Vue component tag name.
+     */
+    protected $componentName = 'acme-myplugin-vuecomponents-mycustomwidget';
+
     public function getData(ReportFetchData $data): mixed
     {
         return [
@@ -52,13 +57,17 @@ class MyCustomWidget extends VueReportWidgetBase
 }
 ```
 
+The `VueReportWidgetBase` class extends `Backend\Classes\VueComponentBase` and provides the dashboard-specific functionality needed for report widgets. The `$componentName` property is required and defines the Vue component tag name. The convention is to use the fully qualified class name in lowercase with backslashes replaced by hyphens (e.g., `Acme\MyPlugin\VueComponents\MyCustomWidget` becomes `acme-myplugin-vuecomponents-mycustomwidget`).
+
 ### Client-Side Component
 
-The Vue component for the widget must be defined in a file located in the assets/js directory, as previously mentioned. Example component code (assets/js/mycustomwidget.js):
+The Vue component for the widget must be defined as an ES module in the assets/js directory. The component uses `export default` and extends the base widget class. Example component code (assets/js/mycustomwidget.js):
 
-```jsx
-Vue.component('plugin-author-component-mycustomwidget', {
-    extends: Vue.options.components['dashboard-component-dashboard-widget-base'],
+```js
+import WidgetBase from '../../../../../../../modules/dashboard/vuecomponents/dashboard/assets/js/widget-base.js';
+
+export default {
+    extends: WidgetBase,
     data: function () {
         return {
         }
@@ -69,7 +78,7 @@ Vue.component('plugin-author-component-mycustomwidget', {
         },
 
         makeDefaultConfigAndData: function () {
-            Vue.set(this.widget.configuration, 'title', 'My Custom Widget');
+            this.widget.configuration.title = 'My Custom Widget';
         },
 
         getSettingsConfiguration: function () {
@@ -81,17 +90,16 @@ Vue.component('plugin-author-component-mycustomwidget', {
 
             return result;
         }
-    },
-    template: '#plugin_author_vuecomponents_mycustomwidget'
-});
+    }
+};
 ```
 
-When defining a component, ensure you use the correct namespaces in the `register` and `component` calls, as well as in the template identifier. These should be inferred from your plugin's PHP namespace and the plugin PHP class name.
+The component is automatically registered by the `VueMaker` trait when the widget's PHP class is loaded. The template is injected from the partial file, so you don't need to specify a `template` property in the JavaScript.
 
 Widget Vue components must include all the methods outlined in the example code. Specifically:
 
 - `useCustomData` - this method must return `true` to inform the dashboard system that the component manages its own data cycle.
-- `makeDefaultConfigAndData` - sets the default widget configuration. In our example, we assign the widget title. The configuration object's keys are arbitrary and intended for the widget’s internal use. We will later demonstrate how to access the widget configuration in the component template. In the server-side code, the widget configuration can be accessed in the `getData` method via the `widgetConfig` argument.
+- `makeDefaultConfigAndData` - sets the default widget configuration. In our example, we assign the widget title using direct assignment (Vue 3's Proxy-based reactivity makes this reactive automatically). The configuration object's keys are arbitrary and intended for the widget's internal use. We will later demonstrate how to access the widget configuration in the component template. In the server-side code, the widget configuration can be accessed in the `getData` method via the `widgetConfig` argument.
 - `getSettingsConfiguration` - provides the configuration for the widget’s settings form. The configuration is defined using JavaScript objects and aligns with the [Inspector fields configuration](https://docs.octobercms.com/3.x/element/inspector-types.html).
 
 The component Vue template must be defined in a partial file located in the `partials` directory, as mentioned above. Below is a basic implementation of a component template (partials/_mycustomwidget.php):

@@ -7,6 +7,12 @@ October CMS includes an AJAX framework that brings a full suite of capabilities,
 
 The AJAX framework comes in two flavors, you may either use [the JavaScript API](./javascript-api.md) or [the data attributes API](./attributes-api.md). The data attributes API doesn't require any JavaScript knowledge to use AJAX with October CMS.
 
+## About Larajax
+
+October CMS uses [Larajax](https://larajax.org) as its AJAX framework foundation. The `jax` JavaScript object provides the client-side API, while the server-side integrates seamlessly with October's CMS components and Twig templating.
+
+For standalone Laravel applications or advanced usage, refer to the [Larajax Documentation](https://larajax.org).
+
 ## Including the Framework
 
 ::: aside
@@ -21,16 +27,10 @@ When working with your [CMS theme](../../cms/themes/themes.md), using the librar
 
 ### Extra Features
 
-The `{% framework %}` tag supports an optional **extras** parameter that includes additional StyleSheet and JavaScript files, for extra features including [form validation](./features/validation.md), [loading indicators](./features/loaders.md), and [flash messages](./features/flash-messages.md).
+The `{% framework %}` tag supports an optional **extras** parameter that includes additional StyleSheet and JavaScript files, for extra features including [form validation](./features/validation.md), [loading indicators](./features/loaders.md), [turbo-charged routing](./turbo-router.md), and [flash messages](./features/flash-messages.md).
 
 ```twig
 {% framework extras %}
-```
-
-You may also include the **turbo** parameter to enable [turbo-charged routing](./turbo-router.md) on every page.
-
-```twig
-{% framework extras turbo %}
 ```
 
 ## How AJAX Requests Work
